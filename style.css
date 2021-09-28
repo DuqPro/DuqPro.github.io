@@ -1,9 +1,17 @@
 body {
 	margin: 0;
 }
-header p{
+header {
+	font-family: verdana;
+}
+header h1 {
+	position: relative;
+	left: 10px;
+}
+header p {
 	position: relative;
 	top: -20px;
+	left: 10px;
 }
 #searchbar {
 	position: absolute;
