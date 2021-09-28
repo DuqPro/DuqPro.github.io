@@ -3,8 +3,11 @@ body {
 	background-color: #FEFFAF;
 	font-family: verdana;
 }
-header {
-	font-family: verdana;
+header img {
+	position: relative;
+	width: 100px;
+	float: left;
+	top: -18px;
 }
 header h1 {
 	position: relative;
@@ -44,8 +47,9 @@ h1 {
 }
 .card img {
 	max-width: 100%;
+	border-radius: 5px;
 }
 .card .text {
 	text-align: left;
-	margin-left: 2em;
+	margin-left: 1em;
 }
