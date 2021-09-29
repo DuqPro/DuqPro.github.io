@@ -1,5 +1,6 @@
 body {
 	margin: 0;
+	padding: 0;
 	background-color: #FEFFAF;
 	font-family: verdana;
 }
@@ -30,6 +31,8 @@ h1 {
 .product-list {
 	background-color: #dfe6e9;
 	padding: 3em;
+	width: 100%;
+	
 }
 .product-list .card{
 	background-color: white;
@@ -39,7 +42,8 @@ h1 {
 	text-align: center;
 }
 .card {
-	width: 400px;
+	width: 300px;
+	height: auto;
 }
 .card .title {
 	font-size: 18px;
@@ -65,7 +69,18 @@ h1 {
 }
 .product-container {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: auto auto auto;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
+	width: 80%;
+	
+}
+.product-container a {
+	color: black;
+    text-decoration: none;
+}
+.product-container a:hover {
+	color: black; 
+    text-decoration: none; 
+    cursor: pointer;
 }
