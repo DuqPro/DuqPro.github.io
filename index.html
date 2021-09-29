@@ -8,13 +8,13 @@
 	<body>
 		<script src="script.js"></script>
 		<header>
-			<img src="assets/DuqProHQ.png">
+			<img alt="DuqPro logo" src="assets/DuqProHQ.png">
 			<h1>Welcome to DuqPro</h1>
 			<p>The best site for tools and programs</p>
-			<form id="searchbar">
+			<form role="search" id="form">
 				<label for="query">Search</label>
-				<input type="text" name="query">
-				<input type="submit" name="Submit">
+				<input type="search" id="query" name="q" placeholder="Search..." aria-label="Search through site content">
+				<button type="button" id="Submit" onclick="search()">Go</button>
 			</form>
 		</header>
 		<section class="product-list">
