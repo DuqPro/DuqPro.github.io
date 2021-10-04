@@ -1,3 +1,10 @@
 #cookie {
     width: 200px;
 }
+body a{
+    color: black;
+    text-decoration: none;
+}
+.shopicon {
+    width: 40px;
+}

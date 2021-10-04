@@ -1,3 +1,26 @@
+<script>
+    var cookiecount = 0;
+    var clickvalue = 1;
+    var cps = 0;
+    var cursorcount = 0;
+    var grandmacount = 0;
+    var cursorcost = 1;
+    var grandmacost = 100;
+    var multiplier = 1;
+
+    function update() {
+            
+    }
+
+    function timer() {
+        cookiecount = cookiecount + cps;
+        document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
+        document.title = cookiecount + " cookies"
+        update()
+    }
+
+    setInterval(timer, 1000)
+</script>
 <html>
     <head>
         <meta charset="utf-8">
@@ -5,11 +28,73 @@
         <title>0 cookies</title>
     </head>
     <body>
-        <script src="cookieclicker/cscript.js"></script>
-        
+        <script>
+            function add() {
+                cookiecount = cookiecount + multiplier;
+                document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
+                document.title = cookiecount + " cookies"
+            }
+        </script>
         <p id="cookiecounter">Cookie count: 0</p><br>
         <a href="#" onclick="add()"><img id="cookie" src="cookieclicker/cookie.png"></a>
         <br><br>
+        <button><a href="#" onclick="save()">Save</a></button>
+        <button><a href="#" onclick="load()">Load</a></button>
+        <button><a href="#" onclick="reset()">Reset</a></button>
+        <br><br>
+
+        <section>
+            <hr class="solid">
+            <p>Buy 1 Cursor | +1 CPS</p>
+            <button><a href="#" onclick="buycursor()"><img class="shopicon" src="cookieclicker/CursorIconTransparent.png"></a></button>
+            <p id="cursorcost">Cost: 1 cookies</p><p id="cursorcount">Count: 0</p>
+            <hr class="solid">
+            <p>Buy 1 Grandma | +5 CPS</p>
+            <button><a href="#" onclick="buygrandma()"><img class="shopicon" src="cookieclicker/GrandmaIconTransparent.png"></a></button>
+            <p id="grandmacost">Cost: 100 cookies</p><p id="grandmacount">Count: 0</p>
+            <hr class="solid">
+        </section>
         
+        <script>
+            function save() {
+                localStorage.setItem("cookiecount", cookiecount);
+            }
+    
+            function load() {
+                cookiecount = localStorage.getItem("cookiecount");
+                cookiecount = parseInt(cookiecount)
+                document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
+                document.title = cookiecount + " cookies"
+            }
+    
+            function reset() {
+                cookiecount = 0;
+                document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
+                document.title = cookiecount + " cookies"
+            }
+
+            function buycursor() {
+                if (cookiecount > cursorcost) {
+                    cookiecount = cookiecount - cursorcost;
+                    cursorcount = cursorcount + 1;
+                    multiplier = multiplier + 1;
+                    cursorcost = cursorcost * Math.round(1.15 ** cursorcount);
+                    document.getElementById("cursorcount").innerHTML = "Count: " + cursorcount;
+                    document.getElementById("cursorcost").innerHTML = "Cost: " + cursorcost + " cookies";
+                    document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
+                }
+            }
+            
+            function buygrandma() {
+                if (cookiecount > grandmacost) {
+                    cookiecount = cookiecount - grandmacost;
+                    grandmacount = grandmacount + 1;
+                    grandmacost = grandmacost * Math.round(1.15 ** grandmacount);
+                    document.getElementById("grandmacount").innerHTML = "Count: " + grandmacount;
+                    document.getElementById("grandmacost").innerHTML = "Cost: " + grandmacost + " cookies";
+                    document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
+                }
+            }
+            </script>
     </body>
 </html>
