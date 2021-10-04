@@ -6,7 +6,7 @@
     var grandmacount = 0;
     var cursorcost = 1;
     var grandmacost = 100;
-    var multiplier = 1;
+    var autosave = false;
 
     function update() {
             
@@ -30,7 +30,7 @@
     <body>
         <script>
             function add() {
-                cookiecount = cookiecount + multiplier;
+                cookiecount = cookiecount + clickvalue;
                 document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
                 document.title = cookiecount + " cookies"
             }
@@ -41,6 +41,7 @@
         <button><a href="#" onclick="save()">Save</a></button>
         <button><a href="#" onclick="load()">Load</a></button>
         <button><a href="#" onclick="reset()">Reset</a></button>
+        <input type="checkbox" id="autosave" name="saver"><label for="saver">Autosave</label>
         <br><br>
 
         <section>
@@ -58,17 +59,54 @@
         <script>
             function save() {
                 localStorage.setItem("cookiecount", cookiecount);
+                localStorage.setItem("cursorcount", cursorcount);
+                localStorage.setItem("grandmacount", grandmacount);
+                localStorage.setItem("cursorcost", cursorcost);
+                localStorage.setItem("grandmacost", grandmacost);
+                localStorage.setItem("cps", cps);
+                localStorage.setItem("clickvalue", clickvalue);
             }
     
             function load() {
                 cookiecount = localStorage.getItem("cookiecount");
                 cookiecount = parseInt(cookiecount)
+                cursorcount = localStorage.getItem("cursorcount");
+                cursorcount = parseInt(cursorcount)
+                grandmacount = localStorage.getItem("grandmacount");
+                grandmacount = parseInt(grandmacount)
+                cursorcost = localStorage.getItem("cursorcost");
+                cursorcost = parseInt(cursorcost)
+                grandmacost = localStorage.getItem("grandmacost");
+                grandmacost = parseInt(grandmacost)
+                cps = localStorage.getItem("cps");
+                cps = parseInt(cps)
+                clickvalue = localStorage.getItem("clickvalue");
+                clickvalue = parseInt(clickvalue)
+                document.getElementById("cursorcount").innerHTML = "Count: " + cursorcount;
+                document.getElementById("cursorcost").innerHTML = "Cost: " + cursorcost + " cookies";
+                document.getElementById("grandmacount").innerHTML = "Count: " + grandmacount;
+                document.getElementById("grandmacost").innerHTML = "Cost: " + grandmacost + " cookies";
                 document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
                 document.title = cookiecount + " cookies"
             }
     
             function reset() {
+                if (document.getElementById('autosave').checked == true) {
+                    save()
+                } else {
+                    //pass
+                }
                 cookiecount = 0;
+                clickvalue = 1;
+                cps = 0;
+                cursorcount = 0;
+                grandmacount = 0;
+                cursorcost = 1;
+                grandmacost = 100;
+                document.getElementById("cursorcount").innerHTML = "Count: " + cursorcount;
+                document.getElementById("cursorcost").innerHTML = "Cost: " + cursorcost + " cookies";
+                document.getElementById("grandmacount").innerHTML = "Count: " + grandmacount;
+                document.getElementById("grandmacost").innerHTML = "Cost: " + grandmacost + " cookies";
                 document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
                 document.title = cookiecount + " cookies"
             }
@@ -77,7 +115,7 @@
                 if (cookiecount > cursorcost) {
                     cookiecount = cookiecount - cursorcost;
                     cursorcount = cursorcount + 1;
-                    multiplier = multiplier + 1;
+                    clickvalue = clickvalue + 1;
                     cursorcost = cursorcost * Math.round(1.15 ** cursorcount);
                     document.getElementById("cursorcount").innerHTML = "Count: " + cursorcount;
                     document.getElementById("cursorcost").innerHTML = "Cost: " + cursorcost + " cookies";
