@@ -11,6 +11,8 @@
     var upgradelevel = 2;
     var upgradecount = 0;
     var upgradecost = 200;
+    var farmcount = 0;
+    var farmcost = 500;
 
     function update() {
         if (document.getElementById('autosave').checked == true) {
@@ -18,10 +20,14 @@
         }
         document.getElementById("cursorcount").innerHTML = "Count: " + cursorcount;
         document.getElementById("cursorcost").innerHTML = "Cost: " + cursorcost + " cookies";
+
         document.getElementById("grandmacount").innerHTML = "Count: " + grandmacount;
         document.getElementById("grandmacost").innerHTML = "Cost: " + grandmacost + " cookies";
 
-        document.getElementById("upgradecount").innerHTML = "Multiplier: " + (upgradecount + 1);
+        document.getElementById("farmcount").innerHTML = "Count: " + farmcount;
+        document.getElementById("farmcost").innerHTML = "Cost: " + farmcost + " cookies";
+
+        document.getElementById("upgradecount").innerHTML = "Multiplier: " + (upgradecount + 1) + "X";
         document.getElementById("upgradecost").innerHTML = "Cost: " + upgradecost + " cookies";
         document.getElementById("upgradelevel").innerHTML = upgradelevel + "X";
 
@@ -40,7 +46,7 @@
 <html>
     <head>
         <meta content="DuqPro Cookie clicker" property="og:title" />
-    	<meta content="The official DuqPro cookie clicker online game. Click to your hearts content." property="og:description" />
+    	<meta content="The official DuqPro cookie clicker game. All built in HTML and JavaScript by the devs at DuqPro. Click to your hearts content." property="og:description" />
     	<meta content="https://duqpro.github.io/cookieclicker" property="og:url" />
     	<meta content="https://duqpro.github.io/cookieclicker/cookie.png" property="og:image" />
     	<meta content="#B28331" data-react-helmet="true" name="theme-color" />
@@ -88,10 +94,19 @@
             <hr class="solid">
 
             <div class="tooltip">
-                <p>Buy 1 Grandma | +5 CPS</p>
+                <p>Buy 1 Grandma | +1 CPS</p>
                 <button><a href="#" onclick="buygrandma()"><img class="shopicon" src="cookieclicker/GrandmaIconTransparent.png"></a></button>
                 <p id="grandmacost">Cost: 100 cookies</p><p id="grandmacount">Count: 0</p>
                 <span class="tooltiptext">Generates 1 cookies per second</span>
+            </div>
+
+            <hr class="solid">
+
+            <div class="tooltip">
+                <p>Buy 1 Farm | +10 CPS</p>
+                <button><a href="#" onclick="buyfarm()"><img class="shopicon" src="cookieclicker/FarmIconTransparent.png"></a></button>
+                <p id="farmcost">Cost: 500 cookies</p><p id="farmcount">Count: 0</p>
+                <span class="tooltiptext">Generates 10 cookies per second</span>
             </div>
 
             <hr class="solid">
@@ -108,6 +123,8 @@
                 localStorage.setItem("cursorcost", cursorcost);
                 localStorage.setItem("grandmacost", grandmacost);
                 localStorage.setItem("grandmacount", grandmacount);
+                localStorage.setItem("farmcost", farmcost);
+                localStorage.setItem("farmcount", farmcount);
                 localStorage.setItem("cps", cps);
                 localStorage.setItem("clickvalue", clickvalue);
             }
@@ -117,14 +134,18 @@
                 cookiecount = parseInt(cookiecount);
                 cursorcount = localStorage.getItem("cursorcount");
                 cursorcount = parseInt(cursorcount);
-                upgradecount = localStorage.getItem("upgradecount");
-                upgradecount = parseInt(upgradecount);
-                grandmacount = localStorage.getItem("grandmacount");
-                grandmacount = parseInt(grandmacount);
                 cursorcost = localStorage.getItem("cursorcost");
                 cursorcost = parseInt(cursorcost);
+                grandmacount = localStorage.getItem("grandmacount");
+                grandmacount = parseInt(grandmacount);
                 grandmacost = localStorage.getItem("grandmacost");
                 grandmacost = parseInt(grandmacost);
+                farmcount = localStorage.getItem("farmcount");
+                farmcount = parseInt(farmcount);
+                farmcost = localStorage.getItem("farmcost");
+                farmcost = parseInt(farmcost);
+                upgradecount = localStorage.getItem("upgradecount");
+                upgradecount = parseInt(upgradecount);
                 upgradecost = localStorage.getItem("upgradecost");
                 upgradecost = parseInt(upgradecost);
                 upgradelevel = localStorage.getItem("upgradelevel");
@@ -182,6 +203,16 @@
                     grandmacount = grandmacount + 1;
                     grandmacost = Math.round(100 * (1.15 ** grandmacount));
                     cps = cps + 1;
+                    update();
+                }
+            }
+
+            function buyfarm() {
+                if (cookiecount >= farmcost) {
+                    cookiecount = cookiecount - farmcost;
+                    farmcount = farmcount + 1;
+                    farmcost = Math.round(500 * (1.15 ** farmcount));
+                    cps = cps + 10;
                     update();
                 }
             }
