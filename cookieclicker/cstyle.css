@@ -30,3 +30,6 @@ body a{
   .tooltip:hover .tooltiptext {
     visibility: visible;
   }
+  #cookie {
+    touch-action: manipulation
+  }
