@@ -1,22 +1,38 @@
 <script>
+    //initiates variables, cookiecount is cookies you have, clickvalue is cookies per click, cps is cookies per second, cursorcount is cursors owned, grandmacount is grandmas owned, cursorcost is cursor price, grandmacost is grandma price, upgradelevel is click multiplier
     var cookiecount = 0;
     var clickvalue = 1;
     var cps = 0;
     var cursorcount = 0;
     var grandmacount = 0;
-    var cursorcost = 1;
+    var cursorcost = 15;
     var grandmacost = 100;
     var autosave = false;
+    var upgradelevel = 2;
+    var upgradecount = 0;
+    var upgradecost = 200;
 
     function update() {
-            
+        if (document.getElementById('autosave').checked == true) {
+            save()
+        }
+        document.getElementById("cursorcount").innerHTML = "Count: " + cursorcount;
+        document.getElementById("cursorcost").innerHTML = "Cost: " + cursorcost + " cookies";
+        document.getElementById("grandmacount").innerHTML = "Count: " + grandmacount;
+        document.getElementById("grandmacost").innerHTML = "Cost: " + grandmacost + " cookies";
+
+        document.getElementById("upgradecount").innerHTML = "Multiplier: " + (upgradecount + 1);
+        document.getElementById("upgradecost").innerHTML = "Cost: " + upgradecost + " cookies";
+        document.getElementById("upgradelevel").innerHTML = upgradelevel + "X";
+
+        document.getElementById("cookiecounter").innerHTML = "Cookie count: " + (cookiecount).toFixed(1);
+        document.getElementById("cpscounter").innerHTML = "Cookies per second: " + (cps).toFixed(1);
+        document.title = (cookiecount).toFixed(1) + " cookies";
     }
 
     function timer() {
         cookiecount = cookiecount + cps;
-        document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
-        document.title = cookiecount + " cookies"
-        update()
+        update();
     }
 
     setInterval(timer, 1000)
@@ -32,11 +48,11 @@
         <script>
             function add() {
                 cookiecount = cookiecount + clickvalue;
-                document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
-                document.title = cookiecount + " cookies"
+                update();
             }
         </script>
-        <p id="cookiecounter">Cookie count: 0</p><br>
+        <p id="cookiecounter">Cookie count: 0</p>
+        <p id="cpscounter">Cookies per second: 0</p>
         <a href="#" onclick="add()"><img id="cookie" src="cookieclicker/cookie.png"></a>
         <br><br>
         <button><a href="#" onclick="save()">Save</a></button>
@@ -47,48 +63,72 @@
 
         <section>
             <hr class="solid">
-            <p>Buy 1 Cursor | +1 CPS</p>
-            <button><a href="#" onclick="buycursor()"><img class="shopicon" src="cookieclicker/CursorIconTransparent.png"></a></button>
-            <p id="cursorcost">Cost: 1 cookies</p><p id="cursorcount">Count: 0</p>
+
+            <div class="tooltip">
+                <p>Buy 1 Upgrade | X CPC</p>
+                <button width="40px" height="40px"><a id="upgradelevel" href="#" onclick="buyupgrade()">2X</a></button>
+                <p id="upgradecost">Cost: 200 cookies</p><p id="upgradecount">Multiplier: 1</p>
+                <span class="tooltiptext">Multiplies cookies per click</span>
+            </div>
+
             <hr class="solid">
-            <p>Buy 1 Grandma | +5 CPS</p>
-            <button><a href="#" onclick="buygrandma()"><img class="shopicon" src="cookieclicker/GrandmaIconTransparent.png"></a></button>
-            <p id="grandmacost">Cost: 100 cookies</p><p id="grandmacount">Count: 0</p>
+
+            <div class="tooltip">
+                <p>Buy 1 Cursor | +1 CPS</p>
+                <button><a href="#" onclick="buycursor()"><img class="shopicon" src="cookieclicker/CursorIconTransparent.png"></a></button>
+                <p id="cursorcost">Cost: 15 cookies</p><p id="cursorcount">Count: 0</p>
+                <span class="tooltiptext">Generates 0.1 cookies per second</span>
+            </div>
+
             <hr class="solid">
+
+            <div class="tooltip">
+                <p>Buy 1 Grandma | +5 CPS</p>
+                <button><a href="#" onclick="buygrandma()"><img class="shopicon" src="cookieclicker/GrandmaIconTransparent.png"></a></button>
+                <p id="grandmacost">Cost: 100 cookies</p><p id="grandmacount">Count: 0</p>
+                <span class="tooltiptext">Generates 1 cookies per second</span>
+            </div>
+
+            <hr class="solid">
+
         </section>
         
         <script>
             function save() {
                 localStorage.setItem("cookiecount", cookiecount);
+                localStorage.setItem("upgradecount", upgradecount);
+                localStorage.setItem("upgradecost", upgradecost);
+                localStorage.setItem("upgradelevel", upgradelevel);
                 localStorage.setItem("cursorcount", cursorcount);
-                localStorage.setItem("grandmacount", grandmacount);
                 localStorage.setItem("cursorcost", cursorcost);
                 localStorage.setItem("grandmacost", grandmacost);
+                localStorage.setItem("grandmacount", grandmacount);
                 localStorage.setItem("cps", cps);
                 localStorage.setItem("clickvalue", clickvalue);
             }
     
             function load() {
                 cookiecount = localStorage.getItem("cookiecount");
-                cookiecount = parseInt(cookiecount)
+                cookiecount = parseInt(cookiecount);
                 cursorcount = localStorage.getItem("cursorcount");
-                cursorcount = parseInt(cursorcount)
+                cursorcount = parseInt(cursorcount);
+                upgradecount = localStorage.getItem("upgradecount");
+                upgradecount = parseInt(upgradecount);
                 grandmacount = localStorage.getItem("grandmacount");
-                grandmacount = parseInt(grandmacount)
+                grandmacount = parseInt(grandmacount);
                 cursorcost = localStorage.getItem("cursorcost");
-                cursorcost = parseInt(cursorcost)
+                cursorcost = parseInt(cursorcost);
                 grandmacost = localStorage.getItem("grandmacost");
-                grandmacost = parseInt(grandmacost)
+                grandmacost = parseInt(grandmacost);
+                upgradecost = localStorage.getItem("upgradecost");
+                upgradecost = parseInt(upgradecost);
+                upgradelevel = localStorage.getItem("upgradelevel");
+                upgradelevel = parseInt(upgradelevel);
                 cps = localStorage.getItem("cps");
-                cps = parseInt(cps)
+                cps = parseFloat(cps);
                 clickvalue = localStorage.getItem("clickvalue");
-                clickvalue = parseInt(clickvalue)
-                document.getElementById("cursorcount").innerHTML = "Count: " + cursorcount;
-                document.getElementById("cursorcost").innerHTML = "Cost: " + cursorcost + " cookies";
-                document.getElementById("grandmacount").innerHTML = "Count: " + grandmacount;
-                document.getElementById("grandmacost").innerHTML = "Cost: " + grandmacost + " cookies";
-                document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
-                document.title = cookiecount + " cookies"
+                clickvalue = parseInt(clickvalue);
+                update();
             }
     
             function reset() {
@@ -97,6 +137,7 @@
                 } else {
                     //pass
                 }
+                document.getElementById('autosave').checked = false
                 cookiecount = 0;
                 clickvalue = 1;
                 cps = 0;
@@ -104,36 +145,41 @@
                 grandmacount = 0;
                 cursorcost = 1;
                 grandmacost = 100;
-                document.getElementById("cursorcount").innerHTML = "Count: " + cursorcount;
-                document.getElementById("cursorcost").innerHTML = "Cost: " + cursorcost + " cookies";
-                document.getElementById("grandmacount").innerHTML = "Count: " + grandmacount;
-                document.getElementById("grandmacost").innerHTML = "Cost: " + grandmacost + " cookies";
-                document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
-                document.title = cookiecount + " cookies"
+                update();
             }
+        </script>
 
+        <script>
+            function buyupgrade() {
+                if (cookiecount >= upgradecost) {
+                    cookiecount = cookiecount - upgradecost;
+                    upgradecount = upgradecount + 1;
+                    clickvalue = 1 * upgradelevel;
+                    upgradecost = Math.round(200 * (upgradecount + 1));
+                    upgradelevel = upgradelevel + 1;
+                    update();
+                }
+            }
+            
             function buycursor() {
-                if (cookiecount > cursorcost) {
+                if (cookiecount >= cursorcost) {
                     cookiecount = cookiecount - cursorcost;
                     cursorcount = cursorcount + 1;
-                    clickvalue = clickvalue + 1;
-                    cursorcost = cursorcost * Math.round(1.15 ** cursorcount);
-                    document.getElementById("cursorcount").innerHTML = "Count: " + cursorcount;
-                    document.getElementById("cursorcost").innerHTML = "Cost: " + cursorcost + " cookies";
-                    document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
+                    cursorcost = Math.round(15 * (1.15 ** cursorcount));
+                    cps = cps + 0.1;
+                    update();
                 }
             }
             
             function buygrandma() {
-                if (cookiecount > grandmacost) {
+                if (cookiecount >= grandmacost) {
                     cookiecount = cookiecount - grandmacost;
                     grandmacount = grandmacount + 1;
-                    grandmacost = grandmacost * Math.round(1.15 ** grandmacount);
-                    document.getElementById("grandmacount").innerHTML = "Count: " + grandmacount;
-                    document.getElementById("grandmacost").innerHTML = "Cost: " + grandmacost + " cookies";
-                    document.getElementById("cookiecounter").innerHTML = "Cookie count: " + cookiecount;
+                    grandmacost = Math.round(100 * (1.15 ** grandmacount));
+                    cps = cps + 1;
+                    update();
                 }
             }
-            </script>
+        </script>
     </body>
 </html>
