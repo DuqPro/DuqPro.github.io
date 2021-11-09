@@ -5,6 +5,9 @@ body {
 	font-family: verdana;
 	overflow-x: hidden;
 }
+#button {
+	visibility: hidden;
+}
 footer {
 	padding-top: 0.5em;
 }
