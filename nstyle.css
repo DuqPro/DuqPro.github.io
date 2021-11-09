@@ -1,0 +1,13 @@
+body {
+	margin: 1em;
+	padding: 0;
+	background-color: #FEFFAF;
+	font-family: verdana;
+	overflow-x: hidden;
+}
+footer {
+	padding-top: 0.5em;
+}
+.card {
+	padding: 0.5em;
+}
